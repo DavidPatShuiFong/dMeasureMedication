@@ -278,7 +278,7 @@ add_medicationTags <- function(
     tag <- medication_list %>>%
       dplyr::group_by(InternalID) %>>%
       dplyr::summarise(
-        InternalID = max(InternalID),
+        ThisInternalID = max(InternalID),
         # 'max' converts vectors to a single number
         screentag_print = paste0(
           "(", max(n), ") ",
@@ -287,12 +287,14 @@ add_medicationTags <- function(
           )
         )
       ) %>>%
-      dplyr::ungroup()
+      dplyr::ungroup() %>>%
+      dplyr::mutate(InternalID = ThisInternalID) %>>%
+      dplyr::select(InternalID, screentag_print)
   } else if (screentag) {
     tag <- medication_list %>>%
       dplyr::group_by(InternalID) %>>%
       dplyr::summarize(
-        InternalID = max(InternalID),
+        ThisInternalID = max(InternalID),
         screentag = dMeasure::semantic_tag(
           tag = as.character(max(n)),
           colour = "green",
@@ -305,7 +307,9 @@ add_medicationTags <- function(
           )
         )
       ) %>>%
-      dplyr::ungroup()
+      dplyr::ungroup() %>>%
+      dplyr::mutate(InternalID = ThisInternalID) %>>%
+      dplyr::select(InternalID, screentag)
   }
 
   tagged_list <- patient_list %>>%
