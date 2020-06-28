@@ -266,6 +266,10 @@ add_medicationTags <- function(
 
   if (nrow(medication_list) > 0) {
     medication_list <- medication_list %>>%
+      dplyr::arrange(InternalID, DrugName) %>>%
+      # arrange does not respect group by default
+      # variably, on the same data!, using .group_by = TRUE
+      #  can fail! (perhaps different version of dplyr?)
       dplyr::group_by(InternalID) %>>%
       dplyr::mutate(n = dplyr::n()) %>>%
       dplyr::ungroup()
@@ -301,7 +305,7 @@ add_medicationTags <- function(
           popuphtml = paste0(
             "<p><font size = \'+0\'>",
             dMeasure::paste2(
-              DrugName, na.rm = TRUE, collapse = ", "
+              DrugName, na.rm = TRUE, collapse = "<br>"
             ),
             "</p>"
           )
