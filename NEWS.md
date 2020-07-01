@@ -9,5 +9,5 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 0.1.0
-24th June 2020
+## 1.0.0
+1st July 2020
