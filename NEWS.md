@@ -9,5 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## 1.0.1
+4th July 2020
+
+* split `Medication.R` to `Medication.R`, `methods.R` and `userInterface.R`
+
 ## 1.0.0
 1st July 2020
