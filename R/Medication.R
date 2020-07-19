@@ -4,6 +4,7 @@
 
 #' dMeasureMedication - medication module for dMeasure
 #'
+#' @md
 #'
 #' @name dMeasureMedication
 #' @title dMeasureMedication
@@ -11,6 +12,27 @@
 #' @include r6_helpers.R
 #' functions to help create R6 classes
 NULL
+
+#' dMeasureIntegration
+#'
+#' @name dMeasureIntegration
+#'
+#' @description integration with dMeasure
+#'   (especially DailyMeasure)
+#'
+#' @param information the information required
+#'   `Provides` - modules provided (in this case, `dMeasureMedication`)
+#'   `Requires` - the modules required (including `dMeasure`)
+#'   `moduleID` - IDs of modules to create
+#'
+#' @return vector of required information
+#'
+#' @export
+dMeasureIntegration <- function(information) {
+  if (information == "Provides") {return(c("dMeasureMedication"))}
+  if (information == "Requires") {return(c("dMeasure"))}
+  if (information == "moduleID") {return(c("Medication_dt"))}
+}
 
 #' dMeasureMedication class
 #' @title dMeasureMedication class

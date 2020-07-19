@@ -19,12 +19,15 @@ NULL
 #'
 #' @export
 shinydashboardmenuItem <- function() {
-  return(
+  x <- list(
     shinydashboard::menuItem(
       "Medication",
-      tabName = "medication", icon = shiny::icon("capsules")
+      tabName = "medication",
+      icon = shiny::icon("capsules")
     )
   )
+
+  return(x)
 }
 
 #' center panel description
@@ -44,7 +47,7 @@ dMeasureShinytabItems <- function() {
       )),
       shiny::fluidRow(shiny::column(
         width = 12,
-        dMeasureMedication::datatableUI("medication_dt")
+        dMeasureMedication::datatableUI("Medication_dt")
       ))
     )
   )
@@ -114,50 +117,51 @@ datatableUI <- function(id) {
 #'
 #' @name datatableServer
 #'
-#' @param input as required by Shiny modules
-#' @param output as required by Shiny modules
-#' @param session as required by Shiny modules
+#' @param id id
 #' @param dMMedication dMeasureMedication R6 object
 #'
 #' @return none
 #'
 #' @export
-datatableServer <- function(input, output, session, dMMedication) {
-  ns <- session$ns
+datatableServer <- function(id, dMMedication) {
 
-  shiny::observeEvent(input$printcopy_view, ignoreNULL = TRUE, {
-    dMMedication$printcopy_view(input$printcopy_view)
-  })
-  shiny::observeEvent(input$n_medication,
-                      ignoreInit = TRUE,ignoreNULL = FALSE, {
-                        dMMedication$n_medication <- input$n_medication
-                      })
+  shiny::moduleServer(id, function(input, output, session) {
+    ns <- session$ns
 
-  styled_medication_list <- shiny::reactive({
-    shiny::validate(
-      shiny::need(
-        dMMedication$dM$appointments_filtered_timeR(),
-        "No appointments in selected range"
-      )
-    )
-    if (input$printcopy_view == TRUE) {
-      DailyMeasure::datatable_styled(
-        dMMedication$appointments_medicationR()
-      )
-    } else {
-      escape_column <- which(
-        names(dMMedication$appointments_medicationR()) == "Medication"
-      )
-      DailyMeasure::datatable_styled(
-        dMMedication$appointments_medicationR(),
-        escape = c(escape_column),
-        copyHtml5 = NULL, printButton = NULL,
-        downloadButton = NULL # no copy/print buttons
-      )
-    }
-  })
+    shiny::observeEvent(input$printcopy_view, ignoreNULL = TRUE, {
+      dMMedication$printcopy_view(input$printcopy_view)
+    })
+    shiny::observeEvent(input$n_medication,
+                        ignoreInit = TRUE,ignoreNULL = FALSE, {
+                          dMMedication$n_medication <- input$n_medication
+                        })
 
-  output$medication_table <- DT::renderDT({
-    styled_medication_list()
+    styled_medication_list <- shiny::reactive({
+      shiny::validate(
+        shiny::need(
+          dMMedication$dM$appointments_filtered_timeR(),
+          "No appointments in selected range"
+        )
+      )
+      if (input$printcopy_view == TRUE) {
+        DailyMeasure::datatable_styled(
+          dMMedication$appointments_medicationR()
+        )
+      } else {
+        escape_column <- which(
+          names(dMMedication$appointments_medicationR()) == "Medication"
+        )
+        DailyMeasure::datatable_styled(
+          dMMedication$appointments_medicationR(),
+          escape = c(escape_column),
+          copyHtml5 = NULL, printButton = NULL,
+          downloadButton = NULL # no copy/print buttons
+        )
+      }
+    })
+
+    output$medication_table <- DT::renderDT({
+      styled_medication_list()
+    })
   })
 }
