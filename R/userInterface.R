@@ -102,12 +102,7 @@ datatableUI <- function(id) {
         )
       )
     ),
-    shinycssloaders::withSpinner(
-      DT::DTOutput(ns("medication_table")),
-      type = 8,
-      hide.element.when.recalculating = FALSE,
-      proxy.height = NULL
-    )
+    DT::DTOutput(ns("medication_table"))
   )
 }
 

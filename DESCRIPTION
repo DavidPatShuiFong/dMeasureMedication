@@ -15,8 +15,7 @@ Imports:
     pipeR,
     dMeasure,
     shiny,
-    shinydashboard,
-    shinycssloaders
+    shinydashboard
 Suggests:
     shiny
 RoxygenNote: 7.1.0.9000
