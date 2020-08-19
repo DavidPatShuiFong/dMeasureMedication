@@ -2,6 +2,7 @@
 
 export("%>>%")
 export(appointments_medication)
+export(dMeasureIntegration)
 export(dMeasureMedication)
 export(dMeasureShinytabItems)
 export(datatableServer)

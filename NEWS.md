@@ -8,6 +8,14 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## 1.1.0
+25th July 2020
+
+* `dMeasureIntegration` module auto-start support
+
+## Changes
+
+* remove use of `shinycssloaders`
 
 ## 1.0.1
 8th July 2020

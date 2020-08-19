@@ -4,14 +4,10 @@
 \alias{datatableServer}
 \title{Medication module - server}
 \usage{
-datatableServer(input, output, session, dMMedication)
+datatableServer(id, dMMedication)
 }
 \arguments{
-\item{input}{as required by Shiny modules}
-
-\item{output}{as required by Shiny modules}
-
-\item{session}{as required by Shiny modules}
+\item{id}{id}
 
 \item{dMMedication}{dMeasureMedication R6 object}
 }
