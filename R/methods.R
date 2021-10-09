@@ -2,9 +2,9 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
-#' methods of dMeasureCustom
+#' methods of dMeasureMedication
 #'
-#' requires R6 methods from Custom.R
+#' requires R6 methods from Medication.R
 #'
 #' @include Medication.R
 NULL
